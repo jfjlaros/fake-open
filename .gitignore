@@ -1,3 +1,5 @@
 *.pyc
-fake_open.egg-info
-dist
+.cache/
+.tox/
+dist/
+fake_open.egg-info/

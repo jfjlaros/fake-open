@@ -6,12 +6,13 @@ from setuptools import setup
 
 package = 'fake_open'
 package_name = 'fake-open'
-description = '{}: Library for testing opening writable files.'.format(package_name)
+description = '{}: Library for testing opening writable files.'.format(
+    package_name)
 documentation = 'README.md'
 license = 'MIT License'
 keywords = []
 
-dependencies = []
+dependencies = ['future']
 supported = [(2, 7), (3, 3), (3, 4)]
 classifiers = [
     'Development Status :: 3 - Alpha',
@@ -71,9 +72,9 @@ setup(
     platforms=['any'],
     packages=[package],
     install_requires=dependencies,
-    entry_points={
-        'console_scripts': ['{0} = {0}.cli:main'.format(package)]
-    },
+    #entry_points={
+    #    'console_scripts': ['{0} = {0}.cli:main'.format(package)]
+    #},
     classifiers=classifiers,
     keywords=' '.join(keywords)
 )
