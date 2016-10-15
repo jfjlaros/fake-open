@@ -1,0 +1,3 @@
+*.pyc
+fake_open.egg-info
+dist
