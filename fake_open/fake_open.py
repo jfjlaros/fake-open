@@ -18,10 +18,16 @@ class FakeOpen(object):
     def __init__(self):
         self.handles = {}
 
-    def open(self, name, attr=''):
+    def add(self, fake_file):
+        """Add a fake file.
+
+        :arg object fake_file: A fake file.
         """
-        Open a fake file.
-        
+        self.handles[fake_file.name] = fake_file
+
+    def open(self, name, attr=''):
+        """Open a fake file.
+
         This handle can not be closed because we want to inspect the content
         even after close() was called.
 
@@ -30,8 +36,9 @@ class FakeOpen(object):
 
         :returns stream: Fake file handle.
         """
-        handle = StringIO()
-        handle.name = name
-        handle.close = lambda: None
-        self.handles[name] = handle
-        return handle
+        if attr == 'w':
+            handle = StringIO()
+            handle.name = name
+            handle.close = lambda: None
+            self.handles[name] = handle
+        return self.handles[name]

@@ -7,17 +7,17 @@ from future.builtins import str, zip
 
 from fake_open import FakeOpen, md5_check, make_fake_file
 
-import rot1
+import rot
 
 
 class TestLibrary(object):
     def setup(self):
-        opener = FakeOpen()
-        self._handles = opener.handles
-        rot1.open = opener.open
+        self._opener = FakeOpen()
+        self._handles = self._opener.handles
+        rot.open = self._opener.open
 
         self._input = make_fake_file('input_file_name', 'aaaa\n')
-        rot1.rot1(self._input, 'output_file_name')
+        rot.rot1(self._input, 'output_file_name')
 
     def test_input_name(self):
         assert self._input.name == 'input_file_name'
@@ -36,3 +36,8 @@ class TestLibrary(object):
         assert md5_check(
             self._handles['output_file_name'].getvalue(),
             '059e71e41e137d96d7be0bf827036f6a')
+
+    def test_prepared_input(self):
+        self._opener.add(make_fake_file('rot2_input', 'aaaa'))
+        rot.rot2('rot2_input', 'rot2_output')
+        assert self._handles['rot2_output'].getvalue() == 'cccc'
